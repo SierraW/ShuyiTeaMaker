@@ -10,6 +10,6 @@ public class CheeseCap extends Ingredient {
 
     @Override
     public String getDescriptions() {
-        return "奶盖";
+        return "芝士奶盖";
     }
 }

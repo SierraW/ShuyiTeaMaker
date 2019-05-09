@@ -11,9 +11,9 @@ public enum ClipValue implements Values {
             case ONE_PIECE:
                 return new Amount("One Piece");
             case THREE_PIECES:
-                return new Amount("Three Piece");
+                return new Amount("Three Pieces");
             case FOUR_PIECES:
-                return new Amount("Four Piece");
+                return new Amount("Four Pieces");
             case TWO_PIECES:
             default:
                 return new Amount("Two Pieces");

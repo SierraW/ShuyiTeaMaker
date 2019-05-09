@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import shuyi.Shuyi;
@@ -22,26 +24,30 @@ public class TeaMaker extends Application {
     Button btnBackMeasureCupScene = new Button("Back");
     Button btnBackShakeCupScene = new Button("Back");
 
-    Button btnCup = new Button("杯子");
-    Button btnShakeCup = new Button("雪克杯");
-    Button btnMeasuringCup = new Button("量杯");
+    Button btnCup = new Button("成品杯子 - 点击进入设置界面");
+    Button btnShakeCup = new Button("雪克杯 - 点击进入设置界面");
+
+    ScrollPane scpMeasuringCup = new ScrollPane();
+    ScrollPane scpMeasuringCup100 = new ScrollPane();
+    ScrollPane scpOtherMC = new ScrollPane();
 
     TeaMakerScene mainScene;
 
     CupScene cupSceneController = new CupScene(btnBackCupScene, shuyi);
-    MCScene measuringCupSceneController = new MCScene(btnBackMeasureCupScene, shuyi);
+    MCScene measuringCupSceneController = new MCScene(btnBackMeasureCupScene, shuyi, scpOtherMC);
     SCScene shakingCupSceneController = new SCScene(btnBackShakeCupScene, shuyi);
     ComboBox<ProductSeries> cmbSeries = new ComboBox<>();
     ComboBox<ShuyiTealiciousTeas> cmbTeas = new ComboBox<>();
+
     Scene cupScene;
     Scene mcScene;
     Scene scScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        mainScene = new TeaMakerScene(btnCup, btnShakeCup, btnMeasuringCup, shuyi, cmbSeries, cmbTeas);
+        mainScene = new TeaMakerScene(btnCup, btnShakeCup, scpMeasuringCup, scpMeasuringCup100 , shuyi, cmbSeries, cmbTeas);
         CupScene cupSceneController = new CupScene(btnBackCupScene, shuyi);
-        MCScene measuringCupSceneController = new MCScene(btnBackMeasureCupScene, shuyi);
+        MCScene measuringCupSceneController = new MCScene(btnBackMeasureCupScene, shuyi, scpOtherMC);
         SCScene shakingCupSceneController = new SCScene(btnBackShakeCupScene, shuyi);
         cupScene = cupSceneController.getScene();
         mcScene = measuringCupSceneController.getScene();
@@ -52,9 +58,26 @@ public class TeaMaker extends Application {
             cupSceneController.refreshLabel();
             primaryStage.setScene(cupScene);
         });
-        btnMeasuringCup.setOnAction(event -> {
+        scpMeasuringCup.setOnMouseClicked(event -> {
+            measuringCupSceneController.setLargeMeasureCup(true);
             measuringCupSceneController.refreshLabel();
             primaryStage.setScene(mcScene);
+        });
+        scpMeasuringCup100.setOnMouseClicked(event -> {
+            measuringCupSceneController.setLargeMeasureCup(false);
+            measuringCupSceneController.refreshLabel();
+            primaryStage.setScene(mcScene);
+        });
+        scpOtherMC.setOnMouseClicked(event -> {
+            if (measuringCupSceneController.isLargeMeasureCup()){
+                measuringCupSceneController.setLargeMeasureCup(false);
+                measuringCupSceneController.refreshLabel();
+                primaryStage.setScene(mcScene);
+            } else {
+                measuringCupSceneController.setLargeMeasureCup(true);
+                measuringCupSceneController.refreshLabel();
+                primaryStage.setScene(mcScene);
+            }
         });
         btnShakeCup.setOnAction(event -> {
             shakingCupSceneController.refreshLabel();

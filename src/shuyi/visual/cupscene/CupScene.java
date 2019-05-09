@@ -28,7 +28,7 @@ public class CupScene implements EventHandler<ActionEvent> {
     Container container;
     Label lblToDos;
     Text txtCurrentContain;
-    ScrollPane scrollPane = new ScrollPane();
+    ScrollPane scrollPane;
     ComboBox<CupType> cmbCupType = new ComboBox<>();
     ComboBox<IngredientType> cmbIngredient = new ComboBox<>();
 
@@ -77,6 +77,7 @@ public class CupScene implements EventHandler<ActionEvent> {
         vBox = getIngredientAmount();
         hBox = getIngredientsHBox();
 
+        scrollPane = new ScrollPane();
         scrollPane.setContent(txtCurrentContain);
 
         refreshLabel();
@@ -104,9 +105,9 @@ public class CupScene implements EventHandler<ActionEvent> {
 
         gridPane.add(btnBack, 0, 0);
         gridPane.add(lblToDos, 0, 1, 3, 1);
-        HBox hBox1 = new HBox();
-        hBox1.getChildren().addAll(lblCupType, cmbCupType, btnCupWarning);
-        gridPane.add(hBox1, 1, 2, 2, 1);
+
+        gripPaneCupTypeChange();
+
         gridPane.add(scrollPane, 0, 2, 1, 2);
 
         HBox hBox2 = new HBox();
@@ -140,6 +141,12 @@ public class CupScene implements EventHandler<ActionEvent> {
 
         Scene scene = new Scene(gridPane, SceneSettings.getScreenWidth(), SceneSettings.getScreenHeight());
         return scene;
+    }
+
+    void gripPaneCupTypeChange() {
+        HBox hBox1 = new HBox();
+        hBox1.getChildren().addAll(lblCupType, cmbCupType, btnCupWarning);
+        gridPane.add(hBox1, 1, 2, 2, 1);
     }
 
     void customLabelAndButtons() {

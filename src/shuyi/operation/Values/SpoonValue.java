@@ -3,7 +3,7 @@ package shuyi.operation.Values;
 import shuyi.operation.operations.Amount;
 
 public enum SpoonValue implements Values {
-    HALF_SPOON(0.5f), FULL_SPOON(1), TWO_SPOON(2), THREE_SPOON(3), FOUR_SPOON(4), FIVE_SPOON(5);
+    HALF_SPOON(0.5f), FULL_SPOON(1), TWO_SPOON(2), THREE_SPOON(3), FOUR_SPOON(4), FIVE_SPOON(5), DECORATION(0.1f);
 
     private final float amount;
 
@@ -14,6 +14,8 @@ public enum SpoonValue implements Values {
     @Override
     public Amount getValue() {
         switch (this) {
+            case DECORATION:
+                return new Amount("撒少许在表面做装饰");
             case HALF_SPOON:
                 return new Amount(0.5f);
             case TWO_SPOON:
@@ -33,6 +35,8 @@ public enum SpoonValue implements Values {
     @Override
     public String toString() {
         switch (this) {
+            case DECORATION:
+                return "撒上少许在表面做装饰";
             case HALF_SPOON:
                 return "0.5勺";
             case TWO_SPOON:

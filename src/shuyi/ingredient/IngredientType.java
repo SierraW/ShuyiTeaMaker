@@ -8,7 +8,6 @@ public enum IngredientType {
     public OperationType getOperationType() {
         switch (this) {
             case FRUIT:
-                return OperationType.CLIP;
             case INGREDIENT:
             case POWDER:
                 return OperationType.SPOON;

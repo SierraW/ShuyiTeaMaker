@@ -8,7 +8,7 @@ import shuyi.ingredient.fruit.Mango;
 import shuyi.ingredient.ingredients.*;
 
 public enum Ingredients implements Adable {
-    COCONUT_JELLY, DRY_GRAPE, GRASS_JELLY, PEANUT, PEARL, RED_BEAN, FIG_JELLY, BLACK_BRICK_JELLY, OATS, PINEAPPLE_JELLY, CARAMEL_PUDDING, SALTY_CREAM, HONEY_POMELO, PINEAPPLE_PULP;
+    COCONUT_JELLY, DRY_GRAPE, GRASS_JELLY, PEANUT, PEARL, RED_BEAN, FIG_JELLY, BLACK_BRICK_JELLY, OATS, PINEAPPLE_JELLY, CARAMEL_PUDDING, HONEY_POMELO, PINEAPPLE_PULP;
 
     @Override
     public Ingredient getIngredient() {
@@ -49,13 +49,6 @@ public enum Ingredients implements Adable {
                     @Override
                     public String getDescriptions() {
                         return "爱玉冻";
-                    }
-                };
-            case SALTY_CREAM:
-                return new Ingredient(IngredientType.INGREDIENT) {
-                    @Override
-                    public String getDescriptions() {
-                        return "芝士奶盖";
                     }
                 };
             case CARAMEL_PUDDING:
