@@ -1,5 +1,6 @@
 package shuyi.visual;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
+import javafx.util.Duration;
 import shuyi.Shuyi;
 import shuyi.container.Cup;
 import shuyi.container.MeasuringCup;
@@ -77,6 +79,10 @@ public class TeaMakerScene {
 
     boolean twoMeasuringCupSelected = false;
 
+    Timeline timeline = new Timeline();
+    int counter;
+    Label lblTimer = new Label();
+    Label lblScore = new Label();
 
     TeaMakerScene(Button btnCup, Button btnShakeCup, ScrollPane scpMeasuringCup, ScrollPane scpMeasuringCup100, Shuyi shuyi, ComboBox<ProductSeries> cmbSeries, ComboBox<ShuyiTealiciousTeas> cmbTeas) {
         this.shuyi = shuyi;
@@ -88,6 +94,11 @@ public class TeaMakerScene {
         cmbSeries.getItems().addAll(ProductSeries.values());
         this.cmbTeas = cmbTeas;
         actions();
+        counter = 0;
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10), event -> {
+            lblTimer.setText(getTimerString(counter++));
+        }));
     }
 
 
@@ -101,7 +112,11 @@ public class TeaMakerScene {
         gridPane.add(cmbTeas, 2, 0);
         cmbTeas.setPromptText("Teas (Please choose a series first)");
         gridPane.add(lblTodo, 0, 1, 2, 1);
-        gridPane.add(btnRandom, 2, 1);
+
+        HBox hBox2 = new HBox();
+        hBox2.getChildren().addAll(btnRandom,lblTimer);
+        hBox2.setSpacing(20);
+        gridPane.add(hBox2, 2, 1);
 
         gridPane.add(btnCup, 0, 2);
         gridPane.add(btnShakeCup, 1, 2);
@@ -135,7 +150,10 @@ public class TeaMakerScene {
 
         gridPane.add(lblWarning, 2, 7);
 
-        gridPane.add(btnSubmitCup, 0, 8);
+        HBox hBox3 = new HBox();
+        hBox3.getChildren().addAll(btnSubmitCup, lblScore);
+        hBox3.setSpacing(20);
+        gridPane.add(hBox3, 0, 8);
         gridPane.add(btnNew, 2, 8);
 
         gridPane.add(scpResult, 0, 9);
@@ -235,16 +253,19 @@ public class TeaMakerScene {
         btnNew.setOnAction(event -> {
             emptyAll();
             btnEmptyAnswer.fire();
+            restartTimer();
         });
         btnRandom.setOnAction(event -> {
             shuyi.getProduct().random();
             refreshLabel();
             btnEmptyAnswer.fire();
+            restartTimer();
         });
         btnSubmitCup.setOnAction(event -> {
             txtResult.setText(shuyi.getCup().printCup());
             emptyAll();
             btnGetAnswer.fire();
+            stopTimer();
         });
         btnGetAnswer.setOnAction(event -> {
             try {
@@ -255,7 +276,7 @@ public class TeaMakerScene {
             }
         });
         btnWriteFile.setOnAction(event -> {
-            Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "You sure you want to rewrite the answer with your current cup?", ButtonType.CANCEL,ButtonType.OK);
+            Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "You sure you want to rewrite the answer at \""  + shuyi.getProduct().getFile().getName() + "\" with your current cup?", ButtonType.CANCEL,ButtonType.OK);
             alertConfirm.initModality(Modality.APPLICATION_MODAL);
             Optional<ButtonType> result = alertConfirm.showAndWait();
             if (result.get() == ButtonType.OK) {
@@ -266,6 +287,7 @@ public class TeaMakerScene {
                     setWarningMsg("Write File Failed", true);
                 }
             }
+            btnGetAnswer.fire();
         });
         btnEmptyAnswer.setOnAction(event -> {
             txtAnswer.setText("");
@@ -342,5 +364,28 @@ public class TeaMakerScene {
             lblWarning.setStyle("-fx-text-fill: green;");
         }
         lblWarning.setText(msg);
+    }
+
+    private String getTimerString(int timeCount) {
+        int second = timeCount / 100;
+        int milliSecond = timeCount - second * 100;
+        String msString;
+        if (milliSecond < 10) {
+            msString = String.format("0%d", milliSecond);
+        } else {
+            msString = String.format("%2d", milliSecond);
+        }
+        return String.format("Time: %2d.%ss", second, msString);
+    }
+
+    private void restartTimer() {
+        counter = 0;
+        lblTimer.setText(getTimerString(0));
+        timeline.playFrom(Duration.millis(500));
+    }
+
+    private void stopTimer() {
+        timeline.stop();
+        lblScore.setText(lblTimer.getText());
     }
 }

@@ -29,8 +29,13 @@ public enum FreshCheeseTea implements ShuyiTealiciousTeas {
     }
 
     @Override
-    public boolean isColdOnly() {
-        return false;
+    public boolean isContainColdOption() {
+        return true;
+    }
+
+    @Override
+    public boolean isContainHotOption() {
+        return true;
     }
 
     @Override

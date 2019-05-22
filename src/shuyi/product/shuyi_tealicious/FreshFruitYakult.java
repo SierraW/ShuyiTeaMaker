@@ -21,8 +21,13 @@ public enum FreshFruitYakult implements ShuyiTealiciousTeas {
     }
 
     @Override
-    public boolean isColdOnly() {
+    public boolean isContainColdOption() {
         return true;
+    }
+
+    @Override
+    public boolean isContainHotOption() {
+        return false;
     }
 
     @Override

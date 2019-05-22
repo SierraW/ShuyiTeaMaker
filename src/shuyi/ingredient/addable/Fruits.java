@@ -2,10 +2,11 @@ package shuyi.ingredient.addable;
 
 import shuyi.ingredient.Adable;
 import shuyi.ingredient.Ingredient;
+import shuyi.ingredient.IngredientType;
 import shuyi.ingredient.fruit.*;
 
 public enum Fruits implements Adable {
-    CHERRY_TOMATO, GRAPE_FRUIT, GREEN_ORANGE, LEMON, LIME, MANGO, ORANGE;
+    CHERRY_TOMATO, GRAPE_FRUIT, GREEN_ORANGE, LEMON, LIME, MANGO, ORANGE, ORANGE_SLICE;
 
     @Override
     public Ingredient getIngredient() {
@@ -22,6 +23,13 @@ public enum Fruits implements Adable {
                 return new Orange();
             case GREEN_ORANGE:
                 return new GreenOrange();
+            case ORANGE_SLICE:
+                return new Ingredient(IngredientType.FRUIT) {
+                    @Override
+                    public String getDescriptions() {
+                        return "橙片（半片）";
+                    }
+                };
             case CHERRY_TOMATO:
             default:
                 return new CherryTomato();

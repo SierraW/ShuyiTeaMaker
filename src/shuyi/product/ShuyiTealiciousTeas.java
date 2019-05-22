@@ -7,7 +7,8 @@ import shuyi.product.options.TemOptions;
 import java.io.File;
 
 public interface ShuyiTealiciousTeas {
-    boolean isColdOnly();
+    boolean isContainHotOption();
+    boolean isContainColdOption();
     boolean isAdjustableSweetness();
     File getFile();
 }

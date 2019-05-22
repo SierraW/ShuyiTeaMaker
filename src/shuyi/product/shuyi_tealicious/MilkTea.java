@@ -38,12 +38,22 @@ public enum MilkTea implements ShuyiTealiciousTeas {
     }
 
     @Override
-    public boolean isColdOnly() {
+    public boolean isContainColdOption() {
+        switch (this) {
+            case Oolong_Milk_Tea_with_Oats_Hot:
+                return false;
+            default:
+                return true;
+        }
+    }
+
+    @Override
+    public boolean isContainHotOption() {
         switch (this) {
             case Oolong_Milk_Tea_with_Oats_Cold:
-                return true;
-            default:
                 return false;
+            default:
+                return true;
         }
     }
 

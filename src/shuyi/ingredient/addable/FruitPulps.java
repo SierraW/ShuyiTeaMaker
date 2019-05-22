@@ -7,7 +7,7 @@ import shuyi.ingredient.fruit_pulp.MangoPulp;
 import shuyi.ingredient.fruit_pulp.YangZhiPulp;
 
 public enum FruitPulps implements Adable {
-    YangZhiPulp, MangoPulp, LemonPulp, OrangePulp, Passion_Fruit_Pulp, Yakult;
+    YangZhiPulp, MangoPulp, LemonPulp, OrangePulp, Passion_Fruit_Pulp, Yakult, Grape_Juice,;
 
     @Override
     public Ingredient getIngredient() {
@@ -42,6 +42,13 @@ public enum FruitPulps implements Adable {
                 };
             case MangoPulp:
                 return new MangoPulp();
+            case Grape_Juice:
+                return new Ingredient(IngredientType.FRUIT_PULP) {
+                    @Override
+                    public String getDescriptions() {
+                        return "葡萄汁";
+                    }
+                };
             case YangZhiPulp:
             default:
                 return new YangZhiPulp();

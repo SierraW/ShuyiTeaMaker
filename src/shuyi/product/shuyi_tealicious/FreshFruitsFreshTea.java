@@ -29,12 +29,17 @@ public enum FreshFruitsFreshTea implements ShuyiTealiciousTeas {
     }
 
     @Override
-    public boolean isColdOnly() {
+    public boolean isContainColdOption() {
+        return true;
+    }
+
+    @Override
+    public boolean isContainHotOption() {
         switch (this) {
             case Honey_Pomelo_Tea:
-                return false;
-            default:
                 return true;
+            default:
+                return false;
         }
     }
 

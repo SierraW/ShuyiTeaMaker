@@ -1,5 +1,8 @@
 package shuyi;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import shuyi.container.Container;
 import shuyi.container.Cup;
 import shuyi.container.MeasuringCup;
@@ -11,6 +14,8 @@ import shuyi.container.shakecup.sc500;
 import shuyi.product.Product;
 
 public class Shuyi {
+    private static Shuyi shuyi = null;
+
     private Product product;
 
 
@@ -22,13 +27,19 @@ public class Shuyi {
     private Container mixerLeft;
     private Container mixerRight;
 
-    public Shuyi() {
+    private Shuyi() {
         product = new Product();
         cup = new LargeSizePlasticCup();
         shakeCup = new sc500();
         measuringCup = new mc500();
         measuringCup100 = new mc100();
+    }
 
+    public static Shuyi getInstance() {
+        if (shuyi == null) {
+            shuyi = new Shuyi();
+        }
+        return shuyi;
     }
 
     public void setProduct(Product product) {

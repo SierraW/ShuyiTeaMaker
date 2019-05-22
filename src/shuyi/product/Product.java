@@ -37,12 +37,22 @@ public class Product {
     public void random() {
         series = ProductSeries.values()[ProductSeries.getRandomNumber(ProductSeries.values().length)];
         shuyiTealiciousTea = series.getRandomTeas();
-        if (shuyiTealiciousTea.isColdOnly()) {
-            temOptions = TemOptions.COLD;
-            iceOptions = IceOptions.values()[ProductSeries.getRandomNumber(IceOptions.values().length)];
-        } else {
+        if (shuyiTealiciousTea.isContainColdOption() && shuyiTealiciousTea.isContainHotOption()) {
             temOptions = TemOptions.values()[ProductSeries.getRandomNumber(TemOptions.values().length)];
-            iceOptions = IceOptions.NO_ICE;
+            if (temOptions == TemOptions.COLD) {
+                iceOptions = IceOptions.values()[ProductSeries.getRandomNumber(IceOptions.values().length)];
+            } else {
+                iceOptions = IceOptions.NO_ICE;
+            }
+        } else {
+            if (shuyiTealiciousTea.isContainHotOption()) { // hot only
+                temOptions = TemOptions.values()[ProductSeries.getRandomNumber(TemOptions.values().length - 1)];
+                iceOptions = IceOptions.NO_ICE;
+            }
+            if (shuyiTealiciousTea.isContainColdOption()) { // cold only
+                temOptions = TemOptions.COLD;
+                iceOptions = IceOptions.values()[ProductSeries.getRandomNumber(IceOptions.values().length)];
+            }
         }
         if (shuyiTealiciousTea.isAdjustableSweetness()) {
             sweetnessOptions = SweetnessOptions.values()[ProductSeries.getRandomNumber(SweetnessOptions.values().length)];

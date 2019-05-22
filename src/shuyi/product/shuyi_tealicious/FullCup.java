@@ -27,13 +27,18 @@ public enum FullCup implements ShuyiTealiciousTeas {
     }
 
     @Override
-    public boolean isColdOnly() {
+    public boolean isContainColdOption() {
+        return true;
+    }
+
+    @Override
+    public boolean isContainHotOption() {
         switch (this) {
             case Signature_Grass_Jelly_Milk_Tea_Large:
             case Signature_Grass_Jelly_Milk_Tea_Medium:
-                return false;
-            default:
                 return true;
+            default:
+                return false;
         }
     }
 

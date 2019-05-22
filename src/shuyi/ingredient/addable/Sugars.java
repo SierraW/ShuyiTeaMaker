@@ -8,7 +8,7 @@ import shuyi.ingredient.sugar.FruitSugar;
 import shuyi.ingredient.sugar.MangoSugar;
 
 public enum Sugars implements Adable {
-    FRUIT_SUGAR, BROWN_SUGAR, MANGO_SUGAR, ROASTED_SUGAR;
+    FRUIT_SUGAR, BROWN_SUGAR, MANGO_SUGAR, ROASTED_SUGAR, BLACK_SUGAR;
 
     @Override
     public Ingredient getIngredient() {
@@ -24,6 +24,13 @@ public enum Sugars implements Adable {
                 return new BrownSugar();
             case FRUIT_SUGAR:
                 return new FruitSugar();
+            case BLACK_SUGAR:
+                return new Ingredient(IngredientType.SUGAR) {
+                    @Override
+                    public String getDescriptions() {
+                        return "黑糖糖浆";
+                    }
+                };
             case MANGO_SUGAR:
             default:
                 return new MangoSugar();

@@ -4,7 +4,7 @@ import shuyi.ingredient.fruit.Mango;
 import shuyi.product.shuyi_tealicious.*;
 
 public enum ProductSeries {
-    FULL_CUP, FRESH_FRUIT_YAKULT, FRESH_FRUITS_FRESH_TEA, MILK_TEA, FRESH_CHEESE_TEA, HANDMADE_FRESH_TEA;
+    FULL_CUP, FRESH_FRUIT_YAKULT, FRESH_FRUITS_FRESH_TEA, MILK_TEA, FRESH_CHEESE_TEA, HANDMADE_FRESH_TEA, NEW_PRODUCTS;
 
     @Override
     public String toString() {
@@ -21,6 +21,8 @@ public enum ProductSeries {
                 return "Handmade Fresh Tea";
             case FRESH_FRUITS_FRESH_TEA:
                 return "Fresh Fruits Fresh Tea";
+            case NEW_PRODUCTS:
+                return "New Products";
             default:
                 return "No Such Type";
         }
@@ -38,6 +40,8 @@ public enum ProductSeries {
                 return FreshFruitYakult.values()[getRandomNumber(FreshFruitYakult.values().length)];
             case FRESH_CHEESE_TEA:
                 return FreshCheeseTea.values()[getRandomNumber(FreshCheeseTea.values().length)];
+            case NEW_PRODUCTS:
+                return NewProduct.values()[getRandomNumber(NewProduct.values().length)];
             case MILK_TEA:
             default:
                 return MilkTea.values()[getRandomNumber(MilkTea.values().length)];

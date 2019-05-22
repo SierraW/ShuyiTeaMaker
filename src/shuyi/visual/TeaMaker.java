@@ -18,7 +18,7 @@ import shuyi.visual.cupscene.MCScene;
 import shuyi.visual.cupscene.SCScene;
 
 public class TeaMaker extends Application {
-    Shuyi shuyi = new Shuyi();
+    Shuyi shuyi = Shuyi.getInstance();
 
     Button btnBackCupScene = new Button("Back");
     Button btnBackMeasureCupScene = new Button("Back");
@@ -30,25 +30,23 @@ public class TeaMaker extends Application {
     ScrollPane scpMeasuringCup = new ScrollPane();
     ScrollPane scpMeasuringCup100 = new ScrollPane();
     ScrollPane scpOtherMC = new ScrollPane();
+    ComboBox<ProductSeries> cmbSeries = new ComboBox<>();
+    ComboBox<ShuyiTealiciousTeas> cmbTeas = new ComboBox<>();
 
-    TeaMakerScene mainScene;
+    TeaMakerScene mainSceneController = new TeaMakerScene(btnCup,btnShakeCup,scpMeasuringCup,scpMeasuringCup100,shuyi,cmbSeries,cmbTeas);
 
     CupScene cupSceneController = new CupScene(btnBackCupScene, shuyi);
     MCScene measuringCupSceneController = new MCScene(btnBackMeasureCupScene, shuyi, scpOtherMC);
     SCScene shakingCupSceneController = new SCScene(btnBackShakeCupScene, shuyi);
-    ComboBox<ProductSeries> cmbSeries = new ComboBox<>();
-    ComboBox<ShuyiTealiciousTeas> cmbTeas = new ComboBox<>();
 
+    Scene mainScene;
     Scene cupScene;
     Scene mcScene;
     Scene scScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        mainScene = new TeaMakerScene(btnCup, btnShakeCup, scpMeasuringCup, scpMeasuringCup100 , shuyi, cmbSeries, cmbTeas);
-        CupScene cupSceneController = new CupScene(btnBackCupScene, shuyi);
-        MCScene measuringCupSceneController = new MCScene(btnBackMeasureCupScene, shuyi, scpOtherMC);
-        SCScene shakingCupSceneController = new SCScene(btnBackShakeCupScene, shuyi);
+        mainScene = mainSceneController.getScene();
         cupScene = cupSceneController.getScene();
         mcScene = measuringCupSceneController.getScene();
         scScene = shakingCupSceneController.getScene();
@@ -101,6 +99,9 @@ public class TeaMaker extends Application {
                 case FULL_CUP:
                     cmbTeas.getItems().setAll(FullCup.values());
                     break;
+                case NEW_PRODUCTS:
+                    cmbTeas.getItems().setAll(NewProduct.values());
+                    break;
                 case MILK_TEA:
                 default:
                     cmbTeas.getItems().setAll(MilkTea.values());
@@ -125,6 +126,9 @@ public class TeaMaker extends Application {
                 case FULL_CUP:
                     shuyi.setProduct(new Product(cmbSeries.getSelectionModel().getSelectedItem(), FullCup.values()[cmbTeas.getSelectionModel().getSelectedIndex()]));
                     break;
+                case NEW_PRODUCTS:
+                    shuyi.setProduct(new Product(cmbSeries.getSelectionModel().getSelectedItem(), NewProduct.values()[cmbTeas.getSelectionModel().getSelectedIndex()]));
+                    break;
                 case MILK_TEA:
                 default:
                     shuyi.setProduct(new Product(cmbSeries.getSelectionModel().getSelectedItem(), MilkTea.values()[cmbTeas.getSelectionModel().getSelectedIndex()]));
@@ -133,14 +137,23 @@ public class TeaMaker extends Application {
             cupSceneController.refreshLabel();
             measuringCupSceneController.refreshLabel();
             shakingCupSceneController.refreshLabel();
-            mainScene.refreshLabel();
+            mainSceneController.refreshLabel();
         });
 
-        btnBackCupScene.setOnAction(event -> primaryStage.setScene(mainScene.getScene()));
-        btnBackMeasureCupScene.setOnAction(event -> primaryStage.setScene(mainScene.getScene()));
-        btnBackShakeCupScene.setOnAction(event -> primaryStage.setScene(mainScene.getScene()));
+        btnBackCupScene.setOnAction(event -> {
+            mainSceneController.refreshLabel();
+            primaryStage.setScene(mainScene);
+        });
+        btnBackMeasureCupScene.setOnAction(event -> {
+            mainSceneController.refreshLabel();
+            primaryStage.setScene(mainScene);
+        });
+        btnBackShakeCupScene.setOnAction(event -> {
+            mainSceneController.refreshLabel();
+            primaryStage.setScene(mainScene);
+        });
 
-        primaryStage.setScene(mainScene.getScene());
+        primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 
