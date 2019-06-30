@@ -6,7 +6,7 @@ import shuyi.operation.Operation;
 public class Mash extends Operation {
     @Override
     public String getDescriptions() {
-        return super.getDescriptions() + "捣碎";
+        return super.getDescriptions() + "捣碎/捣至标准状态";
     }
 
     @Override
